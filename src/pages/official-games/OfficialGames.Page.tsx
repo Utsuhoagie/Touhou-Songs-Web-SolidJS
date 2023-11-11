@@ -2,7 +2,7 @@ import { A } from '@solidjs/router';
 import dayjs from 'dayjs';
 import { Component, For, Show, createResource } from 'solid-js';
 import { api } from '../../config/api/API';
-import { Page } from '../../components/Page';
+import { PageWithNavbar } from '../../components/PageWithNavbar';
 
 type OfficialGame = {
 	Id: number;
@@ -22,11 +22,7 @@ export const OfficialGamesPage = () => {
 	});
 
 	return (
-		<Page centered>
-			<p>OfficialGames.Page</p>
-
-			<A href='/'>Index</A>
-
+		<PageWithNavbar centered>
 			<Show when={!data.loading} fallback={<div>Loading...</div>}>
 				<div class='flex max-w-screen-2xl flex-row flex-wrap justify-center gap-8'>
 					<For each={data()}>
@@ -34,7 +30,7 @@ export const OfficialGamesPage = () => {
 					</For>
 				</div>
 			</Show>
-		</Page>
+		</PageWithNavbar>
 	);
 };
 

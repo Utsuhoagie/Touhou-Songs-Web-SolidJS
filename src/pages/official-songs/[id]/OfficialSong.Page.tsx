@@ -1,7 +1,7 @@
 import { useParams } from '@solidjs/router';
 import { Show, createResource } from 'solid-js';
 import { api } from '../../../config/api/API';
-import { Page } from '../../../components/Page';
+import { PageWithNavbar } from '../../../components/PageWithNavbar';
 
 type OfficialSongDetail = {
 	Id: number;
@@ -24,7 +24,7 @@ export const OfficialSongPage = () => {
 	});
 
 	return (
-		<Page centered>
+		<PageWithNavbar centered>
 			<Show when={data()} fallback={<p>Loading...</p>}>
 				{(game) => (
 					<div class='flex flex-row justify-center gap-16'>
@@ -38,6 +38,6 @@ export const OfficialSongPage = () => {
 					</div>
 				)}
 			</Show>
-		</Page>
+		</PageWithNavbar>
 	);
 };

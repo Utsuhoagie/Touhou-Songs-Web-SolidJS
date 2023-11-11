@@ -2,7 +2,7 @@ import { useParams } from '@solidjs/router';
 import { For, Show, createResource } from 'solid-js';
 import { api } from '../../../config/api/API';
 import dayjs from 'dayjs';
-import { Page } from '../../../components/Page';
+import { PageWithNavbar } from '../../../components/PageWithNavbar';
 
 type OfficialGameDetail = {
 	Id: number;
@@ -26,7 +26,7 @@ export const OfficialGamePage = () => {
 	});
 
 	return (
-		<Page centered>
+		<PageWithNavbar centered>
 			<Show when={data()} fallback={<p>Loading...</p>}>
 				{(game) => (
 					<div class='flex flex-row justify-center gap-16'>
@@ -50,6 +50,6 @@ export const OfficialGamePage = () => {
 					</div>
 				)}
 			</Show>
-		</Page>
+		</PageWithNavbar>
 	);
 };

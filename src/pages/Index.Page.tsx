@@ -1,13 +1,9 @@
-import { A } from '@solidjs/router';
-import { Page } from '../components/Page';
+import { PageWithNavbar } from '../components/PageWithNavbar';
 
 export const IndexPage = () => {
 	return (
-		<Page centered>
+		<PageWithNavbar centered>
 			<p>Index.Page</p>
-			<A class='n' href='/official-games'>
-				Official Games
-			</A>
-		</Page>
+		</PageWithNavbar>
 	);
 };
