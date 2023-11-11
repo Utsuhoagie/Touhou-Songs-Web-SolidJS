@@ -1,0 +1,55 @@
+import { useParams } from '@solidjs/router';
+import { For, Show, createResource } from 'solid-js';
+import { api } from '../../../config/api/API';
+import dayjs from 'dayjs';
+import { Page } from '../../../components/Page';
+
+type OfficialGameDetail = {
+	Id: number;
+	Title: string;
+	GameCode: string;
+	ReleaseDate: Date;
+	ImageUrl: string;
+
+	Songs: {
+		Title: string;
+		Context: string;
+	}[];
+};
+
+export const OfficialGamePage = () => {
+	const { GameCode } = useParams();
+	const [data] = createResource(async () => {
+		const res = await api.get(`OfficialGames/${GameCode}`);
+		const game: OfficialGameDetail = await res.json();
+		return game;
+	});
+
+	return (
+		<Page centered>
+			<Show when={data()} fallback={<p>Loading...</p>}>
+				{(game) => (
+					<div class='flex flex-row justify-center gap-16'>
+						<div class='flex flex-col gap-2'>
+							<img src={game().ImageUrl} />
+							<p>[{game().Id}]</p>
+							<p>
+								{game().Title} ({game().GameCode})
+							</p>
+							<p>{dayjs(game().ReleaseDate).toString()}</p>
+						</div>
+						<div class='flex flex-col gap-2'>
+							<For each={game().Songs}>
+								{(song) => (
+									<div class='rounded-xl bg-slate-300 p-2 text-slate-900'>
+										{song.Title} - {song.Context}
+									</div>
+								)}
+							</For>
+						</div>
+					</div>
+				)}
+			</Show>
+		</Page>
+	);
+};
