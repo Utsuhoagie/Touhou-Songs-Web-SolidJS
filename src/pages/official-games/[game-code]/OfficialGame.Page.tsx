@@ -1,4 +1,4 @@
-import { useParams } from '@solidjs/router';
+import { A, useParams } from '@solidjs/router';
 import { For, Show, createResource } from 'solid-js';
 import { api } from '../../../config/api/API';
 import dayjs from 'dayjs';
@@ -12,6 +12,7 @@ type OfficialGameDetail = {
 	ImageUrl: string;
 
 	Songs: {
+		Id: number;
 		Title: string;
 		Context: string;
 	}[];
@@ -41,9 +42,12 @@ export const OfficialGamePage = () => {
 						<div class='flex flex-col gap-2'>
 							<For each={game().Songs}>
 								{(song) => (
-									<div class='rounded-xl bg-slate-300 p-2 text-slate-900'>
+									<A
+										class='rounded-xl bg-slate-300 p-2 text-slate-900 hover:bg-slate-500'
+										href={`/official-songs/${song.Id}`}
+									>
 										{song.Title} - {song.Context}
-									</div>
+									</A>
 								)}
 							</For>
 						</div>
