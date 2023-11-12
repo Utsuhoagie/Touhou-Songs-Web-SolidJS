@@ -13,16 +13,33 @@ type OfficialSong = {
 	GameCode: string;
 };
 
+type OfficialGame = {
+	Id: number;
+	Title: string;
+	GameCode: string;
+	ReleaseDate: Date;
+	ImageUrl: string;
+
+	SongTitles: string[];
+};
+
 type SearchParams = {
-	searchTitle: string;
+	SearchTitle: string;
+	GameCode: string;
 };
 
 export const OfficialSongsPage = () => {
 	const [params, setParams] = useSearchParams<SearchParams>();
 
-	const [data] = createResource(
-		() => params.searchTitle,
+	const [games] = createResource(async () => {
+		const res = await api.get('OfficialGames');
+		return (await res.json()) as OfficialGame[];
+	});
+
+	const [songs] = createResource(
+		() => [params.SearchTitle, params.GameCode],
 		async () => {
+			console.log({ searchParams: createQueryString(params) });
 			const res = await api.get('OfficialSongs', {
 				searchParams: createQueryString(params),
 			});
@@ -31,13 +48,15 @@ export const OfficialSongsPage = () => {
 	);
 
 	const [searchForm, setSearchForm] = createStore<SearchParams>({
-		searchTitle: '',
+		SearchTitle: '',
+		GameCode: '',
 	});
 
 	const onSubmit: JSX.EventHandler<HTMLFormElement, SubmitEvent> = async (
 		event
 	) => {
 		event.preventDefault();
+		console.log('submit', searchForm);
 		setParams(searchForm);
 	};
 
@@ -45,25 +64,52 @@ export const OfficialSongsPage = () => {
 		<PageWithNavbar centered>
 			<div class='w-full'>
 				<form onSubmit={onSubmit}>
-					<div class='flex flex-row items-center'>
-						<label for='SearchTitle'>Search by Title:</label>
-						<input
-							id='SearchTitle'
-							name='SearchTitle'
-							value={searchForm.searchTitle}
-							onInput={(e) =>
-								setSearchForm({
-									searchTitle: e.target.value,
-								})
-							}
-						/>
+					<div class='flex flex-row items-center gap-4'>
+						<div class='flex flex-row gap-2'>
+							<label for='SearchTitle'>Search by Title:</label>
+							<input
+								id='SearchTitle'
+								name='SearchTitle'
+								value={searchForm.SearchTitle}
+								onInput={(e) =>
+									setSearchForm({
+										...searchForm,
+										SearchTitle: e.currentTarget.value,
+									})
+								}
+							/>
+						</div>
+
+						<div class='flex flex-row gap-2'>
+							<label for='GameCode'>From game:</label>
+							<select
+								id='GameCode'
+								name='GameCode'
+								value={searchForm.GameCode}
+								onChange={(e) =>
+									setSearchForm({
+										...searchForm,
+										GameCode: e.currentTarget.value,
+									})
+								}
+							>
+								<option value=''>None...</option>
+								<For each={games()}>
+									{(game) => (
+										<option value={game.GameCode}>
+											{game.Title}
+										</option>
+									)}
+								</For>
+							</select>
+						</div>
 					</div>
 					<button type='submit'>Search</button>
 				</form>
 
-				<Show when={!data.loading} fallback={<div>Loading...</div>}>
+				<Show when={!songs.loading} fallback={<div>Loading...</div>}>
 					<div class='flex max-w-screen-2xl flex-row flex-wrap justify-center gap-8'>
-						<For each={data()}>
+						<For each={songs()}>
 							{(song) => <OfficialSongCard song={song} />}
 						</For>
 					</div>
