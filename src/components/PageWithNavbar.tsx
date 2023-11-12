@@ -20,6 +20,9 @@ export const PageWithNavbar: ParentComponent<PageWithNavbarProps> = (props) => {
 				<A class='p-1 hover:bg-slate-700' href='/official-songs'>
 					Official Songs
 				</A>
+				<A class='p-1 hover:bg-slate-700' href='/characters'>
+					Characters
+				</A>
 			</div>
 
 			<div
