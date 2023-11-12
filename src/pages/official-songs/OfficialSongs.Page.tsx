@@ -1,7 +1,9 @@
-import { A } from '@solidjs/router';
+import { A, useSearchParams } from '@solidjs/router';
 import { Component, For, Show, createResource } from 'solid-js';
-import { api } from '../../config/api/API';
+import { createStore } from 'solid-js/store';
+import { api, createQueryString } from '../../config/api/API';
 import { PageWithNavbar } from '../../components/PageWithNavbar';
+import { JSX } from 'solid-js/h/jsx-runtime';
 
 type OfficialSong = {
 	Id: number;
@@ -11,22 +13,62 @@ type OfficialSong = {
 	GameCode: string;
 };
 
+type SearchParams = {
+	searchTitle: string;
+};
+
 export const OfficialSongsPage = () => {
-	const [data] = createResource(async () => {
-		const res = await api.get(`OfficialSongs`);
-		const json: OfficialSong[] = await res.json();
-		return json;
+	const [params, setParams] = useSearchParams<SearchParams>();
+
+	const [data] = createResource(
+		() => params.searchTitle,
+		async () => {
+			const res = await api.get('OfficialSongs', {
+				searchParams: createQueryString(params),
+			});
+			return (await res.json()) as OfficialSong[];
+		}
+	);
+
+	const [searchForm, setSearchForm] = createStore<SearchParams>({
+		searchTitle: '',
 	});
+
+	const onSubmit: JSX.EventHandler<HTMLFormElement, SubmitEvent> = async (
+		event
+	) => {
+		event.preventDefault();
+		setParams(searchForm);
+	};
 
 	return (
 		<PageWithNavbar centered>
-			<Show when={!data.loading} fallback={<div>Loading...</div>}>
-				<div class='flex max-w-screen-2xl flex-row flex-wrap justify-center gap-8'>
-					<For each={data()}>
-						{(song) => <OfficialSongCard song={song} />}
-					</For>
-				</div>
-			</Show>
+			<div class='w-full'>
+				<form onSubmit={onSubmit}>
+					<div class='flex flex-row items-center'>
+						<label for='SearchTitle'>Search by Title:</label>
+						<input
+							id='SearchTitle'
+							name='SearchTitle'
+							value={searchForm.searchTitle}
+							onInput={(e) =>
+								setSearchForm({
+									searchTitle: e.target.value,
+								})
+							}
+						/>
+					</div>
+					<button type='submit'>Search</button>
+				</form>
+
+				<Show when={!data.loading} fallback={<div>Loading...</div>}>
+					<div class='flex max-w-screen-2xl flex-row flex-wrap justify-center gap-8'>
+						<For each={data()}>
+							{(song) => <OfficialSongCard song={song} />}
+						</For>
+					</div>
+				</Show>
+			</div>
 		</PageWithNavbar>
 	);
 };
