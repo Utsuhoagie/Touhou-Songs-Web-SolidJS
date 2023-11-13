@@ -8,6 +8,7 @@ type OfficialGameDetail = {
 	Id: number;
 	Title: string;
 	GameCode: string;
+	NumberCode: string;
 	ReleaseDate: Date;
 	ImageUrl: string;
 
@@ -33,7 +34,7 @@ export const OfficialGamePage = () => {
 					<div class='flex flex-row justify-center gap-16'>
 						<div class='flex flex-col gap-2'>
 							<img src={game().ImageUrl} />
-							<p>[{game().Id}]</p>
+							<p>Touhou {game().NumberCode}</p>
 							<p>
 								{game().Title} ({game().GameCode})
 							</p>

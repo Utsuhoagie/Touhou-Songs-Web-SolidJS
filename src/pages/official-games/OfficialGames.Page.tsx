@@ -8,6 +8,7 @@ type OfficialGame = {
 	Id: number;
 	Title: string;
 	GameCode: string;
+	NumberCode: string;
 	ReleaseDate: Date;
 	ImageUrl: string;
 
@@ -70,7 +71,7 @@ const OfficialGameCard: Component<{ game: OfficialGame }> = (props) => {
 		>
 			<img class='h-24 w-24' src={props.game.ImageUrl} />
 			<p class='font-mono text-sm italic'>
-				[{props.game.Id}] - {props.game.GameCode}
+				[TH{props.game.NumberCode}] - {props.game.GameCode}
 			</p>
 			<p class='text-lg font-bold'>{props.game.Title}</p>
 			<p class='font-light italic text-slate-700'>
