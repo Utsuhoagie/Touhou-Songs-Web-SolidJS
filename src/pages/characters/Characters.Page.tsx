@@ -37,8 +37,7 @@ const CharacterCard: Component<{ character: Character }> = (props) => {
 
 	return (
 		<A
-			// href={props.character.OriginGameCode}
-			href='/'
+			href={props.character.Name}
 			class='flex w-48 flex-col items-center gap-1 rounded-xl bg-slate-500 p-2 text-slate-900 shadow'
 		>
 			<img class='h-32' src={props.character.ImageUrl} />

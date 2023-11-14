@@ -5,6 +5,7 @@ import { OfficialGamePage } from '../../pages/official-games/[game-code]/Officia
 import { OfficialSongsPage } from '../../pages/official-songs/OfficialSongs.Page';
 import { OfficialSongPage } from '../../pages/official-songs/[id]/OfficialSong.Page';
 import { CharactersPage } from '../../pages/characters/Characters.Page';
+import { CharacterPage } from '../../pages/characters/[name]/Character.Page';
 
 export const APP_ROUTES: RouteDefinition[] = [
 	{
@@ -43,6 +44,10 @@ export const APP_ROUTES: RouteDefinition[] = [
 			{
 				path: '/',
 				component: CharactersPage,
+			},
+			{
+				path: '/:Name',
+				component: CharacterPage,
 			},
 		],
 	},
