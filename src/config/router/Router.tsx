@@ -1,54 +1,80 @@
 import { RouteDefinition } from '@solidjs/router';
-import { IndexPage } from '../../pages/Index.Page';
-import { OfficialGamesPage } from '../../pages/official-games/OfficialGames.Page';
-import { OfficialGamePage } from '../../pages/official-games/[game-code]/OfficialGame.Page';
-import { OfficialSongsPage } from '../../pages/official-songs/OfficialSongs.Page';
-import { OfficialSongPage } from '../../pages/official-songs/[id]/OfficialSong.Page';
-import { CharactersPage } from '../../pages/characters/Characters.Page';
-import { CharacterPage } from '../../pages/characters/[name]/Character.Page';
+import { IndexPage } from '~/pages/Index.Page';
+import { OfficialGamesPage } from '~/pages/app/official-games/OfficialGames.Page';
+import { OfficialGamePage } from '~/pages/app/official-games/[game-code]/OfficialGame.Page';
+import { OfficialSongsPage } from '~/pages/app/official-songs/OfficialSongs.Page';
+import { OfficialSongPage } from '~/pages/app/official-songs/[id]/OfficialSong.Page';
+import { CharactersPage } from '~/pages/app/characters/Characters.Page';
+import { CharacterPage } from '~/pages/app/characters/[name]/Character.Page';
+import { AuthRedirector } from '~/pages/AuthRedirector.Page';
+import { Login } from '~/pages/auth/Login';
 
-export const APP_ROUTES: RouteDefinition[] = [
+const APP_ROUTES: RouteDefinition[] = [
 	{
-		path: '/',
-		component: IndexPage,
-	},
-	{
-		path: '/official-games',
+		path: '/app',
 		children: [
 			{
 				path: '/',
-				component: OfficialGamesPage,
+				component: IndexPage,
 			},
 			{
-				path: '/:GameCode',
-				component: OfficialGamePage,
+				path: '/official-games',
+				children: [
+					{
+						path: '/',
+						component: OfficialGamesPage,
+					},
+					{
+						path: '/:GameCode',
+						component: OfficialGamePage,
+					},
+				],
+			},
+			{
+				path: '/official-songs',
+				children: [
+					{
+						path: '/',
+						component: OfficialSongsPage,
+					},
+					{
+						path: '/:Id',
+						component: OfficialSongPage,
+					},
+				],
+			},
+			{
+				path: '/characters',
+				children: [
+					{
+						path: '/',
+						component: CharactersPage,
+					},
+					{
+						path: '/:Name',
+						component: CharacterPage,
+					},
+				],
 			},
 		],
 	},
+];
+const AUTH_ROUTES: RouteDefinition[] = [
 	{
-		path: '/official-songs',
+		path: '/auth',
 		children: [
 			{
-				path: '/',
-				component: OfficialSongsPage,
-			},
-			{
-				path: '/:Id',
-				component: OfficialSongPage,
+				path: '/login',
+				component: Login,
 			},
 		],
 	},
+];
+
+export const ROUTES: RouteDefinition[] = [
 	{
-		path: '/characters',
-		children: [
-			{
-				path: '/',
-				component: CharactersPage,
-			},
-			{
-				path: '/:Name',
-				component: CharacterPage,
-			},
-		],
+		path: '',
+		component: AuthRedirector,
+		children: [...APP_ROUTES, ...AUTH_ROUTES],
 	},
 ];

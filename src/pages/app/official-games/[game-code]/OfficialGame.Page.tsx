@@ -1,8 +1,8 @@
 import { A, useParams } from '@solidjs/router';
 import { For, Show, createResource } from 'solid-js';
-import { api } from '../../../config/api/API';
 import dayjs from 'dayjs';
-import { PageWithNavbar } from '../../../components/PageWithNavbar';
+import { api } from '~/config/api/API';
+import { PageWithNavbar } from '~/components/PageWithNavbar';
 
 type OfficialGameDetail = {
 	Id: number;
@@ -22,7 +22,7 @@ type OfficialGameDetail = {
 export const OfficialGamePage = () => {
 	const { GameCode } = useParams();
 	const [data] = createResource(async () => {
-		const res = await api.get(`OfficialGames/${GameCode}`);
+		const res = await api().get(`OfficialGames/${GameCode}`);
 		const game: OfficialGameDetail = await res.json();
 		return game;
 	});

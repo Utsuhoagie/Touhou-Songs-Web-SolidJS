@@ -1,7 +1,7 @@
 import { A, useParams } from '@solidjs/router';
-import { PageWithNavbar } from '../../../components/PageWithNavbar';
 import { For, Show, createResource } from 'solid-js';
-import { api } from '../../../config/api/API';
+import { PageWithNavbar } from '~/components/PageWithNavbar';
+import { api } from '~/config/api/API';
 
 type CharacterDetail = {
 	Id: number;
@@ -24,7 +24,7 @@ type CharacterDetail = {
 export const CharacterPage = () => {
 	const { Name } = useParams();
 	const [data] = createResource(async () => {
-		const res = await api.get(`Characters/${Name}`);
+		const res = await api().get(`Characters/${Name}`);
 		return (await res.json()) as CharacterDetail;
 	});
 

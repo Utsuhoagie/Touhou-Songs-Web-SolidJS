@@ -1,8 +1,8 @@
 import { A } from '@solidjs/router';
 import dayjs from 'dayjs';
 import { Component, For, Show, createResource } from 'solid-js';
-import { api } from '../../config/api/API';
-import { PageWithNavbar } from '../../components/PageWithNavbar';
+import { PageWithNavbar } from '~/components/PageWithNavbar';
+import { api } from '~/config/api/API';
 
 type OfficialGame = {
 	Id: number;
@@ -17,7 +17,7 @@ type OfficialGame = {
 
 export const OfficialGamesPage = () => {
 	const [data] = createResource(async () => {
-		const res = await api.get(`OfficialGames`);
+		const res = await api().get(`OfficialGames`);
 		const json: OfficialGame[] = await res.json();
 		return json;
 	});

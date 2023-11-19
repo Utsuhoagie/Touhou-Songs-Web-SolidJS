@@ -1,7 +1,7 @@
 import { A } from '@solidjs/router';
 import { Component, For, Show, createResource } from 'solid-js';
-import { api } from '../../config/api/API';
-import { PageWithNavbar } from '../../components/PageWithNavbar';
+import { PageWithNavbar } from '~/components/PageWithNavbar';
+import { api } from '~/config/api/API';
 
 type Character = {
 	Id: number;
@@ -14,7 +14,7 @@ type Character = {
 
 export const CharactersPage = () => {
 	const [data] = createResource(async () => {
-		const res = await api.get(`Characters`);
+		const res = await api().get(`Characters`);
 		const json: Character[] = await res.json();
 		return json;
 	});

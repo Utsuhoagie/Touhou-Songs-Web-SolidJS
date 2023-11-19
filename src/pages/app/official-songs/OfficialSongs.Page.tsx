@@ -1,9 +1,9 @@
 import { A, useSearchParams } from '@solidjs/router';
 import { Component, For, Show, createResource } from 'solid-js';
 import { createStore } from 'solid-js/store';
-import { api, createQueryString } from '../../config/api/API';
-import { PageWithNavbar } from '../../components/PageWithNavbar';
-import { JSX } from 'solid-js/h/jsx-runtime';
+import { JSX } from 'solid-js';
+import { api, createQueryString } from '~/config/api/API';
+import { PageWithNavbar } from '~/components/PageWithNavbar';
 
 type OfficialSong = {
 	Id: number;
@@ -32,7 +32,7 @@ export const OfficialSongsPage = () => {
 	const [params, setParams] = useSearchParams<SearchParams>();
 
 	const [games] = createResource(async () => {
-		const res = await api.get('OfficialGames');
+		const res = await api().get('OfficialGames');
 		return (await res.json()) as OfficialGame[];
 	});
 
@@ -40,7 +40,7 @@ export const OfficialSongsPage = () => {
 		() => [params.SearchTitle, params.GameCode],
 		async () => {
 			console.log({ searchParams: createQueryString(params) });
-			const res = await api.get('OfficialSongs', {
+			const res = await api().get('OfficialSongs', {
 				searchParams: createQueryString(params),
 			});
 			return (await res.json()) as OfficialSong[];

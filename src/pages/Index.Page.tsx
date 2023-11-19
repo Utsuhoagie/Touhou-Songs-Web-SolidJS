@@ -1,4 +1,4 @@
-import { PageWithNavbar } from '../components/PageWithNavbar';
+import { PageWithNavbar } from '~/components/PageWithNavbar';
 
 export const IndexPage = () => {
 	return (

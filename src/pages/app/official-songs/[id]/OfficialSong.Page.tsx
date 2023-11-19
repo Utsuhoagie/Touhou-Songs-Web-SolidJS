@@ -1,7 +1,7 @@
 import { useParams } from '@solidjs/router';
 import { Show, createResource } from 'solid-js';
-import { api } from '../../../config/api/API';
-import { PageWithNavbar } from '../../../components/PageWithNavbar';
+import { PageWithNavbar } from '~/components/PageWithNavbar';
+import { api } from '~/config/api/API';
 
 type OfficialSongDetail = {
 	Id: number;
@@ -18,7 +18,7 @@ type OfficialSongDetail = {
 export const OfficialSongPage = () => {
 	const { Id } = useParams();
 	const [data] = createResource(async () => {
-		const res = await api.get(`OfficialSongs/${Id}`);
+		const res = await api().get(`OfficialSongs/${Id}`);
 		const game: OfficialSongDetail = await res.json();
 		return game;
 	});
