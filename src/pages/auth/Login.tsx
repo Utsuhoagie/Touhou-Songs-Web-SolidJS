@@ -1,8 +1,10 @@
 import { JSX } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { PageWithNavbar } from '~/components/PageWithNavbar';
+import { Button } from '~/components/buttons/Button';
+import { TextInput } from '~/components/inputs/TextInput';
 import { api } from '~/config/api/API';
-import { sessionStore, setSessionStore } from '~/pages/AuthRedirector.Page';
+import { setSessionStore } from '~/pages/AuthRedirector.Page';
 
 type LoginForm = {
 	Email: string;
@@ -49,9 +51,8 @@ export const Login = () => {
 				onSubmit={onSubmit}
 			>
 				<label for='Email'>Email:</label>
-				<input
+				<TextInput
 					id='Email'
-					name='Email'
 					value={loginForm.Email}
 					onInput={(e) =>
 						setLoginForm({ ...loginForm, Email: e.target.value })
@@ -59,9 +60,8 @@ export const Login = () => {
 				/>
 
 				<label for='Password'>Password:</label>
-				<input
+				<TextInput
 					id='Password'
-					name='Password'
 					type='password'
 					value={loginForm.Password}
 					onInput={(e) =>
@@ -69,9 +69,9 @@ export const Login = () => {
 					}
 				/>
 
-				<button>Log In</button>
-
-				<p class='w-40'>Token? {sessionStore().token ?? 'None'}</p>
+				<Button width='medium' type='submit'>
+					Log In
+				</Button>
 			</form>
 		</PageWithNavbar>
 	);

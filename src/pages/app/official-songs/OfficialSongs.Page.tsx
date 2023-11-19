@@ -4,6 +4,9 @@ import { createStore } from 'solid-js/store';
 import { JSX } from 'solid-js';
 import { api, createQueryString } from '~/config/api/API';
 import { PageWithNavbar } from '~/components/PageWithNavbar';
+import { TextInput } from '~/components/inputs/TextInput';
+import { Button } from '~/components/buttons/Button';
+import { SelectInput } from '~/components/inputs/SelectInput';
 
 type OfficialSong = {
 	Id: number;
@@ -67,9 +70,8 @@ export const OfficialSongsPage = () => {
 					<div class='flex flex-row items-center gap-4'>
 						<div class='flex flex-row gap-2'>
 							<label for='SearchTitle'>Search by Title:</label>
-							<input
+							<TextInput
 								id='SearchTitle'
-								name='SearchTitle'
 								value={searchForm.SearchTitle}
 								onInput={(e) =>
 									setSearchForm({
@@ -82,9 +84,8 @@ export const OfficialSongsPage = () => {
 
 						<div class='flex flex-row gap-2'>
 							<label for='GameCode'>From game:</label>
-							<select
+							<SelectInput
 								id='GameCode'
-								name='GameCode'
 								value={searchForm.GameCode}
 								onChange={(e) =>
 									setSearchForm({
@@ -101,14 +102,16 @@ export const OfficialSongsPage = () => {
 										</option>
 									)}
 								</For>
-							</select>
+							</SelectInput>
 						</div>
+						<Button width='medium' type='submit'>
+							Search
+						</Button>
 					</div>
-					<button type='submit'>Search</button>
 				</form>
 
 				<Show when={!songs.loading} fallback={<div>Loading...</div>}>
-					<div class='flex max-w-screen-2xl flex-row flex-wrap justify-center gap-8'>
+					<div class='mt-4 flex max-w-screen-2xl flex-row flex-wrap justify-center gap-8'>
 						<For each={songs()}>
 							{(song) => <OfficialSongCard song={song} />}
 						</For>
