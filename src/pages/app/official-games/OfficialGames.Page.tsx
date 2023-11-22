@@ -69,7 +69,7 @@ const OfficialGameCard: Component<{ game: OfficialGame }> = (props) => {
 			href={props.game.GameCode}
 			class='flex w-80 flex-col items-center gap-1 rounded-xl bg-slate-500 p-4 text-slate-900 shadow'
 		>
-			<img class='h-24 w-24' src={props.game.ImageUrl} />
+			<img class='h-24' src={props.game.ImageUrl} />
 			<p class='font-mono text-sm italic'>
 				[TH{props.game.NumberCode}] - {props.game.GameCode}
 			</p>

@@ -8,6 +8,8 @@ import { CharactersPage } from '~/pages/app/characters/Characters.Page';
 import { CharacterPage } from '~/pages/app/characters/[name]/Character.Page';
 import { AuthRedirector } from '~/pages/AuthRedirector.Page';
 import { Login } from '~/pages/auth/Login';
+import { CirclesPage } from '~/pages/app/circles/Circles.Page';
+import { CirclePage } from '~/pages/app/circles/[name]/Circle.Page';
 
 const APP_ROUTES: RouteDefinition[] = [
 	{
@@ -53,6 +55,19 @@ const APP_ROUTES: RouteDefinition[] = [
 					{
 						path: '/:Name',
 						component: CharacterPage,
+					},
+				],
+			},
+			{
+				path: '/circles',
+				children: [
+					{
+						path: '/',
+						component: CirclesPage,
+					},
+					{
+						path: '/:Name',
+						component: CirclePage,
 					},
 				],
 			},

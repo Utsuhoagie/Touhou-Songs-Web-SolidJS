@@ -24,6 +24,9 @@ export const PageWithNavbar: ParentComponent<PageWithNavbarProps> = (props) => {
 				<A class='p-1 hover:bg-slate-700' href='/app/characters'>
 					Characters
 				</A>
+				<A class='p-1 hover:bg-slate-700' href='/app/circles'>
+					Circles
+				</A>
 				<button
 					class='p-1 hover:bg-rose-900'
 					onClick={() => setSessionStore({ token: undefined })}
