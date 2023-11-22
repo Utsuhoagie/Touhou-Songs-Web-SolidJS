@@ -10,6 +10,8 @@ import { AuthRedirector } from '~/pages/AuthRedirector.Page';
 import { Login } from '~/pages/auth/Login';
 import { CirclesPage } from '~/pages/app/circles/Circles.Page';
 import { CirclePage } from '~/pages/app/circles/[name]/Circle.Page';
+import { ArrangementSongsPage } from '~/pages/app/arrangement-songs/ArrangementSongs.Page';
+import { ArrangementSongPage } from '~/pages/app/arrangement-songs/[id]/ArrangementSong.Page';
 
 const APP_ROUTES: RouteDefinition[] = [
 	{
@@ -68,6 +70,19 @@ const APP_ROUTES: RouteDefinition[] = [
 					{
 						path: '/:Name',
 						component: CirclePage,
+					},
+				],
+			},
+			{
+				path: '/arrangement-songs',
+				children: [
+					{
+						path: '/',
+						component: ArrangementSongsPage,
+					},
+					{
+						path: '/:Id',
+						component: ArrangementSongPage,
 					},
 				],
 			},
