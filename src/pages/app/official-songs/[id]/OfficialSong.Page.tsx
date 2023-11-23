@@ -17,22 +17,21 @@ type OfficialSongDetail = {
 
 export const OfficialSongPage = () => {
 	const { Id } = useParams();
-	const [data] = createResource(async () => {
+	const [resource] = createResource(async () => {
 		const res = await api().get(`OfficialSongs/${Id}`);
-		const game: OfficialSongDetail = await res.json();
-		return game;
+		return (await res.json()) as OfficialSongDetail;
 	});
 
 	return (
 		<PageWithNavbar centered>
-			<Show when={data()} fallback={<p>Loading...</p>}>
-				{(game) => (
+			<Show when={resource()} fallback={<p>Loading...</p>}>
+				{(song) => (
 					<div class='flex flex-row justify-center gap-16'>
 						<div class='flex flex-col gap-2'>
-							<img src={game().Game.ImageUrl} />
-							<p>{game().Title}</p>
+							<img src={song().Game.ImageUrl} />
+							<p>{song().Title}</p>
 							<p>
-								{game().Context} - {game().Game.GameCode}
+								{song().Context} - {song().Game.GameCode}
 							</p>
 						</div>
 					</div>

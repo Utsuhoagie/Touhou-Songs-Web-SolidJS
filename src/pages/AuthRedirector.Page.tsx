@@ -7,6 +7,7 @@ type SessionTokenStore = {
 };
 
 export const [sessionStore, setSessionStore] = makePersisted(
+	// eslint-disable-next-line solid/reactivity
 	createSignal<SessionTokenStore>({ token: undefined }),
 	{ storage: sessionStorage }
 );

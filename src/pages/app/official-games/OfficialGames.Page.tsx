@@ -16,7 +16,7 @@ type OfficialGame = {
 };
 
 export const OfficialGamesPage = () => {
-	const [data] = createResource(async () => {
+	const [resource] = createResource(async () => {
 		const res = await api().get(`OfficialGames`);
 		const json: OfficialGame[] = await res.json();
 		return json;
@@ -24,9 +24,9 @@ export const OfficialGamesPage = () => {
 
 	return (
 		<PageWithNavbar centered>
-			<Show when={!data.loading} fallback={<div>Loading...</div>}>
+			<Show when={resource()} fallback={<div>Loading...</div>}>
 				<div class='flex max-w-screen-2xl flex-row flex-wrap justify-center gap-8'>
-					<For each={data()}>
+					<For each={resource()}>
 						{(game) => <OfficialGameCard game={game} />}
 					</For>
 				</div>

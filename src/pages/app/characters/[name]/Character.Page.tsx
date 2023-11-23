@@ -23,14 +23,14 @@ type CharacterDetail = {
 
 export const CharacterPage = () => {
 	const { Name } = useParams();
-	const [data] = createResource(async () => {
+	const [resource] = createResource(async () => {
 		const res = await api().get(`Characters/${Name}`);
 		return (await res.json()) as CharacterDetail;
 	});
 
 	return (
 		<PageWithNavbar>
-			<Show when={data()} fallback={<p>Loading...</p>}>
+			<Show when={resource()} fallback={<p>Loading...</p>}>
 				{(character) => (
 					<div class='flex flex-col items-center gap-2'>
 						<img class='h-60' src={character().ImageUrl} />

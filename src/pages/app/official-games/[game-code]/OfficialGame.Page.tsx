@@ -21,15 +21,14 @@ type OfficialGameDetail = {
 
 export const OfficialGamePage = () => {
 	const { GameCode } = useParams();
-	const [data] = createResource(async () => {
+	const [resource] = createResource(async () => {
 		const res = await api().get(`OfficialGames/${GameCode}`);
-		const game: OfficialGameDetail = await res.json();
-		return game;
+		return (await res.json()) as OfficialGameDetail;
 	});
 
 	return (
 		<PageWithNavbar centered>
-			<Show when={data()} fallback={<p>Loading...</p>}>
+			<Show when={resource()} fallback={<p>Loading...</p>}>
 				{(game) => (
 					<div class='flex flex-row justify-center gap-16'>
 						<div class='flex flex-col gap-2'>

@@ -2,28 +2,29 @@ import { A } from '@solidjs/router';
 import { Component, For, Show, createResource } from 'solid-js';
 import { PageWithNavbar } from '~/components/PageWithNavbar';
 import { api } from '~/config/api/API';
+import { UnofficialStatus } from '~/shared/UnofficialStatus.Type';
+import { getYoutubeThumbnailUrl } from '~/utils/VideoUtils';
 
 type ArrangementSong = {
 	Id: number;
 	Title: string;
 	Url: string;
-	Status: 'Pending' | 'Confirmed' | 'Rejected';
+	Status: UnofficialStatus;
 
 	CircleName: string;
 	OfficialSongTitles: string[];
 };
 
 export const ArrangementSongsPage = () => {
-	const [data] = createResource(async () => {
+	const [resource] = createResource(async () => {
 		const res = await api().get('ArrangementSongs');
-		const json: ArrangementSong[] = await res.json();
-		return json;
+		return (await res.json()) as ArrangementSong[];
 	});
 
 	return (
 		<PageWithNavbar centered>
-			<Show when={data()} fallback={<p>Loading...</p>}>
-				<For each={data()}>
+			<Show when={resource()} fallback={<p>Loading...</p>}>
+				<For each={resource()}>
 					{(arrangementSong) => (
 						<ArrangementSongCard arrangementSong={arrangementSong} />
 					)}
@@ -36,11 +37,6 @@ export const ArrangementSongsPage = () => {
 const ArrangementSongCard: Component<{ arrangementSong: ArrangementSong }> = (
 	props
 ) => {
-	function getYoutubeThumbnailUrl(url: string): string {
-		const videoId = url.split('watch?v=')[1];
-		return `https://img.youtube.com/vi/${videoId}/0.jpg`;
-	}
-
 	return (
 		<A
 			href={`${props.arrangementSong.Id}`}

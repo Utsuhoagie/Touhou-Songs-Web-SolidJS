@@ -34,12 +34,12 @@ type SearchParams = {
 export const OfficialSongsPage = () => {
 	const [params, setParams] = useSearchParams<SearchParams>();
 
-	const [games] = createResource(async () => {
+	const [gamesResource] = createResource(async () => {
 		const res = await api().get('OfficialGames');
 		return (await res.json()) as OfficialGame[];
 	});
 
-	const [songs] = createResource(
+	const [songsResource] = createResource(
 		() => [params.SearchTitle, params.GameCode],
 		async () => {
 			console.log({ searchParams: createQueryString(params) });
@@ -95,7 +95,7 @@ export const OfficialSongsPage = () => {
 								}
 							>
 								<option value=''>None...</option>
-								<For each={games()}>
+								<For each={gamesResource()}>
 									{(game) => (
 										<option value={game.GameCode}>
 											{game.Title}
@@ -110,9 +110,9 @@ export const OfficialSongsPage = () => {
 					</div>
 				</form>
 
-				<Show when={!songs.loading} fallback={<div>Loading...</div>}>
+				<Show when={songsResource()} fallback={<div>Loading...</div>}>
 					<div class='mt-4 flex max-w-screen-2xl flex-row flex-wrap justify-center gap-8'>
-						<For each={songs()}>
+						<For each={songsResource()}>
 							{(song) => <OfficialSongCard song={song} />}
 						</For>
 					</div>

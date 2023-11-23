@@ -13,17 +13,16 @@ type Character = {
 };
 
 export const CharactersPage = () => {
-	const [data] = createResource(async () => {
+	const [resource] = createResource(async () => {
 		const res = await api().get(`Characters`);
-		const json: Character[] = await res.json();
-		return json;
+		return (await res.json()) as Character[];
 	});
 
 	return (
 		<PageWithNavbar centered>
-			<Show when={!data.loading} fallback={<div>Loading...</div>}>
+			<Show when={resource()} fallback={<div>Loading...</div>}>
 				<div class='flex max-w-screen-2xl flex-row flex-wrap justify-center gap-2'>
-					<For each={data()}>
+					<For each={resource()}>
 						{(character) => <CharacterCard character={character} />}
 					</For>
 				</div>

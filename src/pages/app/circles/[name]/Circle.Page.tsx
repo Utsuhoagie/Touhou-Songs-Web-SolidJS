@@ -2,26 +2,26 @@ import { useParams } from '@solidjs/router';
 import { For, Show, createResource } from 'solid-js';
 import { PageWithNavbar } from '~/components/PageWithNavbar';
 import { api } from '~/config/api/API';
+import { UnofficialStatus } from '~/shared/UnofficialStatus.Type';
 
-type Circle = {
+type CircleDetail = {
 	Id: number;
 	Name: string;
-	Status: 'Pending' | 'Confirmed' | 'Rejected';
+	Status: UnofficialStatus;
 
 	ArrangementSongTitles: string[];
 };
 
 export const CirclePage = () => {
 	const { Name } = useParams();
-	const [data] = createResource(async () => {
+	const [resource] = createResource(async () => {
 		const res = await api().get(`Circles/${Name}`);
-		const json: Circle = await res.json();
-		return json;
+		return (await res.json()) as CircleDetail;
 	});
 
 	return (
 		<PageWithNavbar centered>
-			<Show when={data()} fallback={<p>Loading...</p>}>
+			<Show when={resource()} fallback={<p>Loading...</p>}>
 				{(circle) => (
 					<div class='flex flex-col gap-4'>
 						<div class='rounded bg-slate-700 p-2'>
