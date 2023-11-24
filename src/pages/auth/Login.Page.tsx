@@ -1,21 +1,24 @@
-import { useNavigate } from '@solidjs/router';
+import { A } from '@solidjs/router';
 import { JSX } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { PageWithNavbar } from '~/components/PageWithNavbar';
 import { Button } from '~/components/buttons/Button';
 import { TextInput } from '~/components/inputs/TextInput';
 import { api } from '~/config/api/API';
+import { setSessionStore } from '~/pages/AuthRedirector.Page';
 
-type RegisterForm = {
-	UserName: string;
+type LoginForm = {
 	Email: string;
 	Password: string;
 };
 
-export const Register = () => {
-	const navigate = useNavigate();
-	const [registerForm, setRegisterForm] = createStore<RegisterForm>({
-		UserName: '',
+type LoginResponse = {
+	Token: string;
+	ExpiresAt: Date;
+};
+
+export const LoginPage = () => {
+	const [loginForm, setLoginForm] = createStore<LoginForm>({
 		Email: '',
 		Password: '',
 	});
@@ -23,41 +26,37 @@ export const Register = () => {
 	const onSubmit: JSX.EventHandler<HTMLFormElement, SubmitEvent> = async (
 		event
 	) => {
+		console.log('--- Login onSubmit');
 		event.preventDefault();
 
-		const res = await api().post('Auth/Register', { json: registerForm });
-		await res.json();
+		const res = await api().post('Auth/Login', { json: loginForm });
+		const json: LoginResponse = await res.json();
 
 		if (res.status !== 200) {
-			window.alert('Register failed!');
+			window.alert('Login failed!');
 		}
 
-		navigate('/auth/login');
+		console.log('--- Login before set token');
+		setSessionStore({ token: json.Token });
+		console.log('--- Login after set token');
+
+		console.log('--- Login res =', res);
 	};
 
 	return (
 		<PageWithNavbar centered>
-			<p>Register</p>
+			<p>Login</p>
 
 			<form
 				class='flex w-80 flex-col items-center gap-4'
 				onSubmit={onSubmit}
 			>
-				<label for='UserName'>User Name:</label>
-				<TextInput
-					id='UserName'
-					value={registerForm.UserName}
-					onInput={(e) =>
-						setRegisterForm({ ...registerForm, UserName: e.target.value })
-					}
-				/>
-
 				<label for='Email'>Email:</label>
 				<TextInput
 					id='Email'
-					value={registerForm.Email}
+					value={loginForm.Email}
 					onInput={(e) =>
-						setRegisterForm({ ...registerForm, Email: e.target.value })
+						setLoginForm({ ...loginForm, Email: e.target.value })
 					}
 				/>
 
@@ -65,15 +64,22 @@ export const Register = () => {
 				<TextInput
 					id='Password'
 					type='password'
-					value={registerForm.Password}
+					value={loginForm.Password}
 					onInput={(e) =>
-						setRegisterForm({ ...registerForm, Password: e.target.value })
+						setLoginForm({ ...loginForm, Password: e.target.value })
 					}
 				/>
 
 				<Button width='medium' type='submit'>
-					Register
+					Log In
 				</Button>
+
+				<p>
+					New user?{' '}
+					<A href='/auth/register' class='underline'>
+						Register here
+					</A>
+				</p>
 			</form>
 		</PageWithNavbar>
 	);

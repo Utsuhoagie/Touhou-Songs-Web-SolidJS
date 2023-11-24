@@ -7,11 +7,12 @@ import { OfficialSongPage } from '~/pages/app/official-songs/[id]/OfficialSong.P
 import { CharactersPage } from '~/pages/app/characters/Characters.Page';
 import { CharacterPage } from '~/pages/app/characters/[name]/Character.Page';
 import { AuthRedirector } from '~/pages/AuthRedirector.Page';
-import { Login } from '~/pages/auth/Login';
+import { LoginPage } from '~/pages/auth/Login.Page';
 import { CirclesPage } from '~/pages/app/circles/Circles.Page';
 import { CirclePage } from '~/pages/app/circles/[name]/Circle.Page';
 import { ArrangementSongsPage } from '~/pages/app/arrangement-songs/ArrangementSongs.Page';
 import { ArrangementSongPage } from '~/pages/app/arrangement-songs/[id]/ArrangementSong.Page';
+import { RegisterPage } from '~/pages/auth/Register.Page';
 
 const APP_ROUTES: RouteDefinition[] = [
 	{
@@ -95,11 +96,11 @@ const AUTH_ROUTES: RouteDefinition[] = [
 		children: [
 			{
 				path: '/login',
-				component: Login,
+				component: LoginPage,
 			},
 			{
 				path: '/register',
-				component: Register,
+				component: RegisterPage,
 			},
 		],
 	},
