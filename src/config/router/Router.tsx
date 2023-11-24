@@ -97,6 +97,10 @@ const AUTH_ROUTES: RouteDefinition[] = [
 				path: '/login',
 				component: Login,
 			},
+			{
+				path: '/register',
+				component: Register,
+			},
 		],
 	},
 ];
