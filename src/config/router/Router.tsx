@@ -12,6 +12,7 @@ import { CirclesPage } from '~/pages/app/circles/Circles.Page';
 import { CirclePage } from '~/pages/app/circles/[name]/Circle.Page';
 import { ArrangementSongsPage } from '~/pages/app/arrangement-songs/ArrangementSongs.Page';
 import { ArrangementSongPage } from '~/pages/app/arrangement-songs/[id]/ArrangementSong.Page';
+import { CreateCirclePage } from '~/pages/app/circles/create/CreateCircle.Page';
 import { RegisterPage } from '~/pages/auth/Register.Page';
 
 const APP_ROUTES: RouteDefinition[] = [
@@ -71,6 +72,10 @@ const APP_ROUTES: RouteDefinition[] = [
 					{
 						path: '/:Name',
 						component: CirclePage,
+					},
+					{
+						path: '/create',
+						component: CreateCirclePage,
 					},
 				],
 			},
