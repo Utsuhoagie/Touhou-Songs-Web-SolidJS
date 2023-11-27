@@ -3,6 +3,7 @@ import { Component, For, Show, createResource } from 'solid-js';
 import { CheckIcon } from '~/assets/icons/Check.Icon';
 import { XIcon } from '~/assets/icons/X.Icon';
 import { PageWithNavbar } from '~/components/PageWithNavbar';
+import { LinkButton } from '~/components/buttons/LinkButton';
 import { api } from '~/config/api/API';
 import { UnofficialStatus } from '~/shared/UnofficialStatus.Type';
 import { AuthUtils } from '~/utils/AuthUtils';
@@ -24,9 +25,7 @@ export const CirclesPage = () => {
 	return (
 		<PageWithNavbar centered>
 			<Show when={resource()} fallback={<p>Loading...</p>}>
-				<A href='create' class='hover:bg-red-900'>
-					Create new Circle
-				</A>
+				<LinkButton href='create'>Create new Circle</LinkButton>
 				<div class='flex flex-col gap-2'>
 					<For each={resource()}>
 						{(circle) => (

@@ -1,6 +1,7 @@
 import { A } from '@solidjs/router';
 import { Component, For, Show, createResource } from 'solid-js';
 import { PageWithNavbar } from '~/components/PageWithNavbar';
+import { LinkButton } from '~/components/buttons/LinkButton';
 import { api } from '~/config/api/API';
 import { UnofficialStatus } from '~/shared/UnofficialStatus.Type';
 import { getYoutubeThumbnailUrl } from '~/utils/VideoUtils';
@@ -23,6 +24,7 @@ export const ArrangementSongsPage = () => {
 
 	return (
 		<PageWithNavbar centered>
+			<LinkButton href='create'>Create new Arrangement</LinkButton>
 			<Show when={resource()} fallback={<p>Loading...</p>}>
 				<For each={resource()}>
 					{(arrangementSong) => (

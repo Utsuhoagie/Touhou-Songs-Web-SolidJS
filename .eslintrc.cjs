@@ -26,6 +26,16 @@ module.exports = {
 	},
 	plugins: ['@typescript-eslint', 'solid'],
 	rules: {
+		'no-mixed-spaces-and-tabs': 'off',
 		'@typescript-eslint/no-explicit-any': 'warn',
+		'no-unused-vars': 'off',
+		'@typescript-eslint/no-unused-vars': [
+			'error', // or "error"
+			{
+				argsIgnorePattern: '^_',
+				varsIgnorePattern: '^_',
+				caughtErrorsIgnorePattern: '^_',
+			},
+		],
 	},
 };
