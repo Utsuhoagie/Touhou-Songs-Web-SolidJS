@@ -6,7 +6,7 @@ import { api, createQueryString } from '~/config/api/API';
 import { PageWithNavbar } from '~/components/PageWithNavbar';
 import { TextInput } from '~/components/inputs/TextInput';
 import { Button } from '~/components/buttons/Button';
-import { SelectInput } from '~/components/inputs/SelectInput';
+import { SingleSelectInput } from '~/components/inputs/SelectInput';
 
 type OfficialSong = {
 	Id: number;
@@ -84,7 +84,7 @@ export const OfficialSongsPage = () => {
 
 						<div class='flex flex-row gap-2'>
 							<label for='GameCode'>From game:</label>
-							<SelectInput
+							<SingleSelectInput
 								id='GameCode'
 								value={searchForm.GameCode}
 								onChange={(e) =>
@@ -93,16 +93,14 @@ export const OfficialSongsPage = () => {
 										GameCode: e.currentTarget.value,
 									})
 								}
-							>
-								<option value=''>None...</option>
-								<For each={gamesResource()}>
-									{(game) => (
-										<option value={game.GameCode}>
-											{game.Title}
-										</option>
-									)}
-								</For>
-							</SelectInput>
+								options={[
+									{ value: '', label: 'None...' },
+									...gamesResource()!.map((game) => ({
+										value: game.GameCode,
+										label: game.Title,
+									})),
+								]}
+							/>
 						</div>
 						<Button width='medium' type='submit'>
 							Search

@@ -14,6 +14,7 @@ import { ArrangementSongsPage } from '~/pages/app/arrangement-songs/ArrangementS
 import { ArrangementSongPage } from '~/pages/app/arrangement-songs/[id]/ArrangementSong.Page';
 import { CreateCirclePage } from '~/pages/app/circles/create/CreateCircle.Page';
 import { RegisterPage } from '~/pages/auth/Register.Page';
+import { CreateArrangementSongPage } from '~/pages/app/arrangement-songs/create/CreateArrangementSong.Page';
 
 const APP_ROUTES: RouteDefinition[] = [
 	{
@@ -89,6 +90,10 @@ const APP_ROUTES: RouteDefinition[] = [
 					{
 						path: '/:Id',
 						component: ArrangementSongPage,
+					},
+					{
+						path: 'create',
+						component: CreateArrangementSongPage,
 					},
 				],
 			},

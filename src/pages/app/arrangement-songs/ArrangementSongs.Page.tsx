@@ -26,11 +26,13 @@ export const ArrangementSongsPage = () => {
 		<PageWithNavbar centered>
 			<LinkButton href='create'>Create new Arrangement</LinkButton>
 			<Show when={resource()} fallback={<p>Loading...</p>}>
-				<For each={resource()}>
-					{(arrangementSong) => (
-						<ArrangementSongCard arrangementSong={arrangementSong} />
-					)}
-				</For>
+				<div class='flex flex-row gap-8'>
+					<For each={resource()}>
+						{(arrangementSong) => (
+							<ArrangementSongCard arrangementSong={arrangementSong} />
+						)}
+					</For>
+				</div>
 			</Show>
 		</PageWithNavbar>
 	);
