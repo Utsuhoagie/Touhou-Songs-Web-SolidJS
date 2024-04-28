@@ -21,9 +21,11 @@ export const AuthRedirector = () => {
 		const pathname = location.pathname;
 		const isLoggedIn = Boolean(sessionStore().token);
 
-		if (!isLoggedIn && !pathname.startsWith('/auth')) {
+		const isPathnameIndex = pathname === '/';
+
+		if (!isLoggedIn && (pathname.startsWith('/app') || isPathnameIndex)) {
 			navigate('/auth/login');
-		} else if (isLoggedIn && !pathname.startsWith('/app')) {
+		} else if (isLoggedIn && (pathname.startsWith('/auth') || isPathnameIndex)) {
 			navigate('/app/official-games');
 		}
 	});

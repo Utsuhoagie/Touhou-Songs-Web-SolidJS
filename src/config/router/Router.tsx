@@ -15,15 +15,12 @@ import { ArrangementSongPage } from '~/pages/app/arrangement-songs/[id]/Arrangem
 import { CreateCirclePage } from '~/pages/app/circles/create/CreateCircle.Page';
 import { RegisterPage } from '~/pages/auth/Register.Page';
 import { CreateArrangementSongPage } from '~/pages/app/arrangement-songs/create/CreateArrangementSong.Page';
+import { NotFound404Page } from '~/pages/app/404/NotFound404.Page';
 
 const APP_ROUTES: RouteDefinition[] = [
 	{
 		path: '/app',
 		children: [
-			{
-				path: '/',
-				component: IndexPage,
-			},
 			{
 				path: '/official-games',
 				children: [
@@ -97,6 +94,10 @@ const APP_ROUTES: RouteDefinition[] = [
 					},
 				],
 			},
+			{
+				path: '/',
+				component: IndexPage,
+			},
 		],
 	},
 ];
@@ -120,6 +121,13 @@ export const ROUTES: RouteDefinition[] = [
 	{
 		path: '',
 		component: AuthRedirector,
-		children: [...APP_ROUTES, ...AUTH_ROUTES],
+		children: [
+			...APP_ROUTES,
+			...AUTH_ROUTES,
+			{
+				path: '/*',
+				component: NotFound404Page,
+			},
+		],
 	},
 ];
