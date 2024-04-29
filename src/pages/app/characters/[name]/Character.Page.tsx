@@ -14,7 +14,7 @@ type CharacterDetail = {
 		NumberCode: string;
 		ImageUrl: string;
 	};
-	Songs: {
+	OfficialSongs: {
 		Id: string;
 		Title: string;
 		Context: string;
@@ -35,16 +35,14 @@ export const CharacterPage = () => {
 					<div class='flex flex-col items-center gap-2'>
 						<img class='h-60' src={character().ImageUrl} />
 						<p class='text-lg font-semibold'>{character().Name}</p>
-						<p class='text-sm text-slate-500'>
-							{character().OriginGame.Title}
-						</p>
+						<p class='text-sm text-slate-500'>{character().OriginGame.Title}</p>
 						<div class='mt-4'>
 							<p>Songs:</p>
-							<For each={character().Songs}>
+							<For each={character().OfficialSongs}>
 								{(song) => (
 									<A
 										class='rounded-xl bg-slate-700 p-2'
-										href={`/official-songs/${song.Id}`}
+										href={`/app/official-songs/${song.Id}`}
 									>
 										{song.Title} - {song.Context}
 									</A>

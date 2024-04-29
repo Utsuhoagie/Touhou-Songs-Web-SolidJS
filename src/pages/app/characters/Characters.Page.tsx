@@ -9,7 +9,7 @@ type Character = {
 	ImageUrl: string;
 	OriginGameCode: string;
 
-	SongTitles: string[];
+	OfficialSongTitles: string[];
 };
 
 export const CharactersPage = () => {
@@ -22,9 +22,7 @@ export const CharactersPage = () => {
 		<PageWithNavbar centered>
 			<Show when={resource()} fallback={<div>Loading...</div>}>
 				<div class='flex max-w-screen-2xl flex-row flex-wrap justify-center gap-2'>
-					<For each={resource()}>
-						{(character) => <CharacterCard character={character} />}
-					</For>
+					<For each={resource()}>{(character) => <CharacterCard character={character} />}</For>
 				</div>
 			</Show>
 		</PageWithNavbar>
@@ -32,7 +30,7 @@ export const CharactersPage = () => {
 };
 
 const CharacterCard: Component<{ character: Character }> = (props) => {
-	const songsCount = () => props.character.SongTitles.length;
+	const songsCount = () => props.character.OfficialSongTitles.length;
 
 	return (
 		<A
@@ -49,13 +47,11 @@ const CharacterCard: Component<{ character: Character }> = (props) => {
 				{songsCount() === 0
 					? 'No songs.'
 					: songsCount() === 1
-					? '1 song:'
-					: `${songsCount()} songs:`}
+					  ? '1 song:'
+					  : `${songsCount()} songs:`}
 			</p>
-			<For each={props.character.SongTitles}>
-				{(songTitle) => (
-					<p class='w-full truncate p-1 text-sm'>{songTitle}</p>
-				)}
+			<For each={props.character.OfficialSongTitles}>
+				{(songTitle) => <p class='w-full truncate p-1 text-sm'>{songTitle}</p>}
 			</For>
 		</A>
 	);

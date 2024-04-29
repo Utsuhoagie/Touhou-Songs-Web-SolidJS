@@ -55,9 +55,7 @@ export const OfficialSongsPage = () => {
 		GameCode: '',
 	});
 
-	const onSubmit: JSX.EventHandler<HTMLFormElement, SubmitEvent> = async (
-		event
-	) => {
+	const onSubmit: JSX.EventHandler<HTMLFormElement, SubmitEvent> = async (event) => {
 		event.preventDefault();
 		console.log('submit', searchForm);
 		setParams(searchForm);
@@ -67,52 +65,52 @@ export const OfficialSongsPage = () => {
 		<PageWithNavbar centered>
 			<div class='w-full'>
 				<form onSubmit={onSubmit}>
-					<div class='flex flex-row items-center gap-4'>
-						<div class='flex flex-row gap-2'>
-							<label for='SearchTitle'>Search by Title:</label>
-							<TextInput
-								id='SearchTitle'
-								value={searchForm.SearchTitle}
-								onInput={(e) =>
-									setSearchForm({
-										...searchForm,
-										SearchTitle: e.currentTarget.value,
-									})
-								}
-							/>
-						</div>
+					<Show when={gamesResource()} fallback={<div>Loading...</div>}>
+						<div class='flex flex-row items-center gap-4'>
+							<div class='flex flex-row gap-2'>
+								<label for='SearchTitle'>Search by Title:</label>
+								<TextInput
+									id='SearchTitle'
+									value={searchForm.SearchTitle}
+									onInput={(e) =>
+										setSearchForm({
+											...searchForm,
+											SearchTitle: e.currentTarget.value,
+										})
+									}
+								/>
+							</div>
 
-						<div class='flex flex-row gap-2'>
-							<label for='GameCode'>From game:</label>
-							<SingleSelectInput
-								id='GameCode'
-								value={searchForm.GameCode}
-								onChange={(e) =>
-									setSearchForm({
-										...searchForm,
-										GameCode: e.currentTarget.value,
-									})
-								}
-								options={[
-									{ value: '', label: 'None...' },
-									...gamesResource()!.map((game) => ({
-										value: game.GameCode,
-										label: game.Title,
-									})),
-								]}
-							/>
+							<div class='flex flex-row gap-2'>
+								<label for='GameCode'>From game:</label>
+								<SingleSelectInput
+									id='GameCode'
+									value={searchForm.GameCode}
+									onChange={(e) =>
+										setSearchForm({
+											...searchForm,
+											GameCode: e.currentTarget.value,
+										})
+									}
+									options={[
+										{ value: '', label: 'None...' },
+										...gamesResource()!.map((game) => ({
+											value: game.GameCode,
+											label: game.Title,
+										})),
+									]}
+								/>
+							</div>
+							<Button width='medium' type='submit'>
+								Search
+							</Button>
 						</div>
-						<Button width='medium' type='submit'>
-							Search
-						</Button>
-					</div>
+					</Show>
 				</form>
 
 				<Show when={songsResource()} fallback={<div>Loading...</div>}>
 					<div class='mt-4 flex max-w-screen-2xl flex-row flex-wrap justify-center gap-8'>
-						<For each={songsResource()}>
-							{(song) => <OfficialSongCard song={song} />}
-						</For>
+						<For each={songsResource()}>{(song) => <OfficialSongCard song={song} />}</For>
 					</div>
 				</Show>
 			</div>
